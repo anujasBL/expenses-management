@@ -1,18 +1,24 @@
 import React, { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
-import { 
-  Search, 
-  SortAsc, 
-  SortDesc, 
-  CreditCard, 
+import {
+  Search,
+  SortAsc,
+  SortDesc,
+  CreditCard,
   Calendar,
   Tag,
   Edit,
   Trash2,
-  Plus
+  Plus,
 } from 'lucide-react';
 import { Expense, ExpenseCategory } from '@/types';
 import { EXPENSE_CATEGORIES, CURRENCY } from '@/constants';
@@ -47,13 +53,14 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
 
   // Filter and sort expenses
   const filteredAndSortedExpenses = useMemo(() => {
-    let filtered = expenses.filter(expense => {
+    const filtered = expenses.filter(expense => {
       const matchesSearch = expense.description
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = !categoryFilter || expense.category.id === categoryFilter;
-      
+
+      const matchesCategory =
+        !categoryFilter || expense.category.id === categoryFilter;
+
       return matchesSearch && matchesCategory;
     });
 
@@ -102,7 +109,10 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
   };
 
   const handleDelete = (expenseId: string) => {
-    if (onDelete && window.confirm('Are you sure you want to delete this expense?')) {
+    if (
+      onDelete &&
+      window.confirm('Are you sure you want to delete this expense?')
+    ) {
       onDelete(expenseId);
     }
   };
@@ -137,11 +147,23 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
         <CardContent className="p-6">
           <div className="text-center py-12">
             <div className="text-red-500 mb-4">
-              <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              <svg
+                className="mx-auto h-12 w-12"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading expenses</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Error loading expenses
+            </h3>
             <p className="text-gray-500 mb-4">{error}</p>
             {onRetry && (
               <Button onClick={onRetry} variant="outline">
@@ -168,11 +190,23 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
         <CardContent className="p-6">
           <div className="text-center py-12">
             <div className="text-red-500 mb-4">
-              <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              <svg
+                className="mx-auto h-12 w-12"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading expenses</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Error loading expenses
+            </h3>
             <p className="text-gray-500 mb-4">{error}</p>
             {onRetry && (
               <Button onClick={onRetry} variant="outline">
@@ -214,7 +248,7 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
               Manage and track your expense records
             </CardDescription>
           </div>
-          
+
           {onAddNew && (
             <Button onClick={onAddNew} leftIcon={<Plus className="h-4 w-4" />}>
               Add Expense
@@ -233,7 +267,7 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
                 type="text"
                 placeholder="Search expenses..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
                 leftIcon={<Search className="h-4 w-4" />}
                 label="Search expenses"
                 aria-label="Search expenses"
@@ -255,9 +289,15 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
 
           {/* Sort Controls */}
           <div className="flex items-center space-x-4">
-            <span className="text-sm font-medium text-gray-700" id="sort-label">Sort by:</span>
-            <div className="flex space-x-2" role="group" aria-labelledby="sort-label">
-              {sortFieldOptions.map((option) => (
+            <span className="text-sm font-medium text-gray-700" id="sort-label">
+              Sort by:
+            </span>
+            <div
+              className="flex space-x-2"
+              role="group"
+              aria-labelledby="sort-label"
+            >
+              {sortFieldOptions.map(option => (
                 <Button
                   key={option.value}
                   variant={sortField === option.value ? 'default' : 'outline'}
@@ -267,11 +307,12 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
                   aria-label={`Sort by ${option.label}`}
                 >
                   <span>{option.label}</span>
-                  {sortField === option.value && (
-                    sortDirection === 'asc' ? 
-                      <SortAsc className="h-3 w-3" /> : 
+                  {sortField === option.value &&
+                    (sortDirection === 'asc' ? (
+                      <SortAsc className="h-3 w-3" />
+                    ) : (
                       <SortDesc className="h-3 w-3" />
-                  )}
+                    ))}
                 </Button>
               ))}
             </div>
@@ -281,10 +322,9 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
         {/* Search Results Announcement for Screen Readers */}
         {searchQuery && (
           <div className="sr-only" aria-live="polite">
-            {filteredAndSortedExpenses.length === 1 
-              ? '1 expense found' 
-              : `${filteredAndSortedExpenses.length} expenses found`
-            }
+            {filteredAndSortedExpenses.length === 1
+              ? '1 expense found'
+              : `${filteredAndSortedExpenses.length} expenses found`}
           </div>
         )}
 
@@ -293,23 +333,27 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
           <div className="text-center py-12">
             <CreditCard className="mx-auto h-12 w-12 text-gray-400 mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              {searchQuery || categoryFilter ? 'No matching expenses' : 'No expenses yet'}
+              {searchQuery || categoryFilter
+                ? 'No matching expenses'
+                : 'No expenses yet'}
             </h3>
             <p className="text-gray-500 mb-4">
-              {searchQuery || categoryFilter 
+              {searchQuery || categoryFilter
                 ? 'Try adjusting your search or filters'
-                : 'Start tracking your expenses by adding your first entry.'
-              }
+                : 'Start tracking your expenses by adding your first entry.'}
             </p>
             {onAddNew && !searchQuery && !categoryFilter && (
-              <Button onClick={onAddNew} leftIcon={<Plus className="h-4 w-4" />}>
+              <Button
+                onClick={onAddNew}
+                leftIcon={<Plus className="h-4 w-4" />}
+              >
                 Add First Expense
               </Button>
             )}
           </div>
         ) : (
           <div className="space-y-3">
-            {filteredAndSortedExpenses.map((expense) => (
+            {filteredAndSortedExpenses.map(expense => (
               <div
                 key={expense.id}
                 className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
@@ -319,7 +363,9 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
                   <div className="flex items-center space-x-3">
                     <div
                       className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: getCategoryColor(expense.category) }}
+                      style={{
+                        backgroundColor: getCategoryColor(expense.category),
+                      }}
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-900 truncate">
@@ -346,7 +392,7 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
                       {formatCurrency(expense.amount)}
                     </p>
                   </div>
-                  
+
                   <div className="flex items-center space-x-2">
                     {onEdit && (
                       <Button
@@ -360,7 +406,7 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
                         <Edit className="h-4 w-4" />
                       </Button>
                     )}
-                    
+
                     {onDelete && (
                       <Button
                         variant="ghost"

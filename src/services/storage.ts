@@ -33,14 +33,13 @@ class LocalStorageService implements StorageService {
 
       const expenses = JSON.parse(data);
       // Convert date strings back to Date objects
-      return expenses.map((expense: any) => ({
+      return expenses.map((expense: Expense & { date: string; createdAt: string; updatedAt: string }) => ({
         ...expense,
         date: new Date(expense.date),
         createdAt: new Date(expense.createdAt),
         updatedAt: new Date(expense.updatedAt),
       }));
     } catch (error) {
-      console.error('Error reading expenses from localStorage:', error);
       return [];
     }
   }
@@ -52,7 +51,6 @@ class LocalStorageService implements StorageService {
     try {
       this.storage.setItem(STORAGE_KEYS.expenses, JSON.stringify(expenses));
     } catch (error) {
-      console.error('Error saving expenses to localStorage:', error);
       throw new Error('Failed to save expenses to localStorage');
     }
   }
@@ -67,7 +65,6 @@ class LocalStorageService implements StorageService {
 
       return JSON.parse(data);
     } catch (error) {
-      console.error('Error reading categories from localStorage:', error);
       return [];
     }
   }
@@ -79,7 +76,6 @@ class LocalStorageService implements StorageService {
     try {
       this.storage.setItem(STORAGE_KEYS.categories, JSON.stringify(categories));
     } catch (error) {
-      console.error('Error saving categories to localStorage:', error);
       throw new Error('Failed to save categories to localStorage');
     }
   }
@@ -93,7 +89,6 @@ class LocalStorageService implements StorageService {
         this.storage.removeItem(key);
       });
     } catch (error) {
-      console.error('Error clearing localStorage:', error);
       throw new Error('Failed to clear localStorage');
     }
   }
@@ -105,7 +100,7 @@ class LocalStorageService implements StorageService {
     try {
       const expenses = await this.getExpenses();
       const categories = await this.getCategories();
-      
+
       const exportData = {
         expenses,
         categories,
@@ -115,7 +110,6 @@ class LocalStorageService implements StorageService {
 
       return JSON.stringify(exportData, null, 2);
     } catch (error) {
-      console.error('Error exporting data:', error);
       throw new Error('Failed to export data');
     }
   }
@@ -126,16 +120,15 @@ class LocalStorageService implements StorageService {
   async importData(data: string): Promise<void> {
     try {
       const importData = JSON.parse(data);
-      
+
       if (importData.expenses) {
         await this.saveExpenses(importData.expenses);
       }
-      
+
       if (importData.categories) {
         await this.saveCategories(importData.categories);
       }
     } catch (error) {
-      console.error('Error importing data:', error);
       throw new Error('Failed to import data: Invalid format');
     }
   }
@@ -196,14 +189,18 @@ class IndexedDBService implements StorageService {
         resolve();
       };
 
-      request.onupgradeneeded = (event) => {
+      request.onupgradeneeded = event => {
         const db = (event.target as IDBOpenDBRequest).result;
-        
+
         // Create object stores
         if (!db.objectStoreNames.contains('expenses')) {
-          const expenseStore = db.createObjectStore('expenses', { keyPath: 'id' });
+          const expenseStore = db.createObjectStore('expenses', {
+            keyPath: 'id',
+          });
           expenseStore.createIndex('date', 'date', { unique: false });
-          expenseStore.createIndex('category', 'category.id', { unique: false });
+          expenseStore.createIndex('category', 'category.id', {
+            unique: false,
+          });
         }
 
         if (!db.objectStoreNames.contains('categories')) {
@@ -215,7 +212,7 @@ class IndexedDBService implements StorageService {
 
   async getExpenses(): Promise<Expense[]> {
     if (!this.db) await this.init();
-    
+
     return new Promise((resolve, reject) => {
       const transaction = this.db!.transaction(['expenses'], 'readonly');
       const store = transaction.objectStore('expenses');
@@ -225,7 +222,7 @@ class IndexedDBService implements StorageService {
       request.onsuccess = () => {
         const expenses = request.result;
         // Convert date strings back to Date objects
-        const convertedExpenses = expenses.map((expense: any) => ({
+        const convertedExpenses = expenses.map((expense: Expense & { date: string; createdAt: string; updatedAt: string }) => ({
           ...expense,
           date: new Date(expense.date),
           createdAt: new Date(expense.createdAt),
@@ -238,14 +235,14 @@ class IndexedDBService implements StorageService {
 
   async saveExpenses(expenses: Expense[]): Promise<void> {
     if (!this.db) await this.init();
-    
+
     return new Promise((resolve, reject) => {
       const transaction = this.db!.transaction(['expenses'], 'readwrite');
       const store = transaction.objectStore('expenses');
-      
+
       // Clear existing data
       store.clear();
-      
+
       // Add new data
       expenses.forEach(expense => {
         store.add(expense);
@@ -258,7 +255,7 @@ class IndexedDBService implements StorageService {
 
   async getCategories(): Promise<ExpenseCategory[]> {
     if (!this.db) await this.init();
-    
+
     return new Promise((resolve, reject) => {
       const transaction = this.db!.transaction(['categories'], 'readonly');
       const store = transaction.objectStore('categories');
@@ -271,14 +268,14 @@ class IndexedDBService implements StorageService {
 
   async saveCategories(categories: ExpenseCategory[]): Promise<void> {
     if (!this.db) await this.init();
-    
+
     return new Promise((resolve, reject) => {
       const transaction = this.db!.transaction(['categories'], 'readwrite');
       const store = transaction.objectStore('categories');
-      
+
       // Clear existing data
       store.clear();
-      
+
       // Add new data
       categories.forEach(category => {
         store.add(category);
@@ -291,10 +288,13 @@ class IndexedDBService implements StorageService {
 
   async clearAll(): Promise<void> {
     if (!this.db) await this.init();
-    
+
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(['expenses', 'categories'], 'readwrite');
-      
+      const transaction = this.db!.transaction(
+        ['expenses', 'categories'],
+        'readwrite'
+      );
+
       transaction.objectStore('expenses').clear();
       transaction.objectStore('categories').clear();
 
@@ -306,7 +306,7 @@ class IndexedDBService implements StorageService {
   async exportData(): Promise<string> {
     const expenses = await this.getExpenses();
     const categories = await this.getCategories();
-    
+
     const exportData = {
       expenses,
       categories,
@@ -319,11 +319,11 @@ class IndexedDBService implements StorageService {
 
   async importData(data: string): Promise<void> {
     const importData = JSON.parse(data);
-    
+
     if (importData.expenses) {
       await this.saveExpenses(importData.expenses);
     }
-    
+
     if (importData.categories) {
       await this.saveCategories(importData.categories);
     }
@@ -338,4 +338,3 @@ export const indexedDBService = new IndexedDBService();
 export const storageService: StorageService = localStorageService;
 
 // Export types
-

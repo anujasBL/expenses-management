@@ -1,11 +1,13 @@
 # Testing Suite Prompt Instructions
 
 ## 🧪 **Primary Objective**
+
 Produce comprehensive testing suite covering Unit Tests, Integration Tests, and E2E Tests with ≥90% functional coverage and proper mocking strategies.
 
 ## 📋 **Core Testing Requirements**
 
 ### **1. Test Coverage & Types**
+
 - **Unit Tests**: Jest + React Testing Library for component and utility testing
 - **Integration Tests**: Component interaction and data flow testing
 - **E2E Tests**: Playwright or Cypress for end-to-end user workflows
@@ -13,6 +15,7 @@ Produce comprehensive testing suite covering Unit Tests, Integration Tests, and 
 - **Test Data**: Use realistic test data fixtures and mocks
 
 ### **2. External Service Mocking**
+
 - **Stripe**: Mock payment processing and webhook handling
 - **SendGrid**: Mock email sending and delivery confirmation
 - **Cloudinary**: Mock image upload and transformation services
@@ -20,12 +23,14 @@ Produce comprehensive testing suite covering Unit Tests, Integration Tests, and 
 - **Authentication**: Mock auth providers and token validation
 
 ### **3. Test Execution**
+
 - **Single Command**: Provide one command to run all tests with coverage
 - **Individual Suites**: Separate commands for unit, integration, and E2E tests
 - **CI Integration**: Include guidance for continuous integration execution
 - **Parallel Execution**: Optimize test suite for CI/CD pipeline performance
 
 ### **4. Test Infrastructure**
+
 - **Test Environment**: Proper test environment configuration
 - **Mock Strategy**: Comprehensive mocking strategy documentation
 - **Fixtures**: Realistic test data fixtures for all entity types
@@ -36,12 +41,14 @@ Produce comprehensive testing suite covering Unit Tests, Integration Tests, and 
 ### **Testing Suite Documentation (testing-suite.md) Including:**
 
 #### **1. Test Plan & Scope**
+
 - **User Stories Mapping**: Map tests to specific user story requirements
 - **SRS Requirements**: Align test coverage with software requirements
 - **Test Categories**: Unit, Integration, and E2E test breakdown
 - **Coverage Goals**: Specific coverage targets per component/module
 
 #### **2. Directory Structure**
+
 ```
 tests/
 ├── unit/
@@ -63,12 +70,14 @@ tests/
 ```
 
 #### **3. Sample Test Specifications**
+
 - **Unit Test Examples**: Component testing with React Testing Library
 - **Integration Test Examples**: Component interaction testing
 - **E2E Test Examples**: User workflow testing
 - **Mock Examples**: External service mocking patterns
 
 #### **4. Test Commands**
+
 - **All Tests**: `npm run test:coverage` - Run complete test suite
 - **Unit Tests**: `npm run test:unit` - Run unit tests only
 - **Integration Tests**: `npm run test:integration` - Run integration tests
@@ -76,12 +85,14 @@ tests/
 - **Coverage Report**: `npm run test:coverage:report` - Generate coverage report
 
 #### **5. CI Integration Notes**
+
 - **GitHub Actions**: Test execution in CI pipeline
 - **Parallel Execution**: Optimize test suite for CI performance
 - **Coverage Reporting**: CI coverage reporting and thresholds
 - **Test Artifacts**: Test results and coverage reports in CI
 
 #### **6. Mocking Strategy & Fixtures**
+
 - **Mock Strategy**: Comprehensive approach to mocking external dependencies
 - **Fixture Guidelines**: Creating realistic test data
 - **Mock Examples**: Stripe, SendGrid, Cloudinary, and API mocking
@@ -90,6 +101,7 @@ tests/
 ## 🔧 **Technical Standards**
 
 ### **Testing Standards**
+
 - **Unit Tests**: Test individual components and functions in isolation
 - **Integration Tests**: Test component interactions and data flow
 - **E2E Tests**: Test complete user workflows and critical paths
@@ -97,6 +109,7 @@ tests/
 - **Test Data**: Realistic fixtures that represent production scenarios
 
 ### **Test Framework Requirements**
+
 - **Jest**: Primary testing framework with proper configuration
 - **React Testing Library**: Component testing with user-centric approach
 - **Playwright/Cypress**: E2E testing for user workflows
@@ -104,6 +117,7 @@ tests/
 - **Mock Libraries**: Jest mocks, MSW, or similar for API mocking
 
 ### **Test Quality Standards**
+
 - **Test Isolation**: Each test must run independently
 - **Deterministic Results**: Tests must produce consistent results
 - **Fast Execution**: Optimize test suite for developer workflow
@@ -112,6 +126,7 @@ tests/
 ## 📊 **Quality Assurance**
 
 ### **Test Coverage Verification**
+
 - ✅ All unit tests pass
 - ✅ Integration tests pass
 - ✅ E2E tests pass
@@ -119,6 +134,7 @@ tests/
 - ✅ Mock strategy properly implemented
 
 ### **Test Execution Verification**
+
 - ✅ Single command runs all tests
 - ✅ Individual test suites work independently
 - ✅ CI integration functions correctly
@@ -141,11 +157,11 @@ describe('ExpenseForm', () => {
   it('should submit expense data successfully', async () => {
     const mockSubmit = jest.fn();
     const { user } = render(<ExpenseForm onSubmit={mockSubmit} />);
-    
+
     await user.type(screen.getByLabelText('Amount'), '25.50');
     await user.type(screen.getByLabelText('Description'), 'Lunch');
     await user.click(screen.getByRole('button', { name: 'Add Expense' }));
-    
+
     expect(mockSubmit).toHaveBeenCalledWith({
       amount: 25.50,
       description: 'Lunch',
@@ -169,6 +185,7 @@ jest.mock('@/services/stripe', () => ({
 ## 🚀 **Final Deliverable**
 
 A comprehensive testing suite that:
+
 - Covers all application functionality with ≥90% coverage
 - Implements proper mocking strategies for external services
 - Provides clear test execution commands

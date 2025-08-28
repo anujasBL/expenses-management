@@ -8,7 +8,8 @@ export interface SelectOption {
   disabled?: boolean;
 }
 
-export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
+export interface SelectProps
+  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   options: SelectOption[];
   label?: string;
   error?: string;
@@ -51,7 +52,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {label}
           </label>
         )}
-        
+
         <div className="relative">
           <select
             ref={ref}
@@ -68,8 +69,8 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
               error
                 ? `${selectId}-error`
                 : helperText
-                ? `${selectId}-helper`
-                : undefined
+                  ? `${selectId}-helper`
+                  : undefined
             }
             {...props}
           >
@@ -78,7 +79,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                 {placeholder}
               </option>
             )}
-            {options.map((option) => (
+            {options.map(option => (
               <option
                 key={option.value}
                 value={option.value}
@@ -88,12 +89,12 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
               </option>
             ))}
           </select>
-          
+
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
             <ChevronDown className="h-4 w-4 text-gray-400" />
           </div>
         </div>
-        
+
         {error && (
           <p
             id={`${selectId}-error`}
@@ -103,7 +104,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {error}
           </p>
         )}
-        
+
         {helperText && !error && (
           <p
             id={`${selectId}-helper`}

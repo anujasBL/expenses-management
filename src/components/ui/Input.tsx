@@ -1,7 +1,8 @@
 import React from 'react';
 import { clsx } from 'clsx';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -36,14 +37,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {label}
           </label>
         )}
-        
+
         <div className="relative">
           {leftIcon && (
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <div className="h-5 w-5 text-gray-400">{leftIcon}</div>
             </div>
           )}
-          
+
           <input
             type={type}
             className={clsx(
@@ -60,19 +61,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               error
                 ? `${inputId}-error`
                 : helperText
-                ? `${inputId}-helper`
-                : undefined
+                  ? `${inputId}-helper`
+                  : undefined
             }
             {...props}
           />
-          
+
           {rightIcon && (
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <div className="h-5 w-5 text-gray-400">{rightIcon}</div>
             </div>
           )}
         </div>
-        
+
         {error && (
           <p
             id={`${inputId}-error`}
@@ -82,7 +83,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {error}
           </p>
         )}
-        
+
         {helperText && !error && (
           <p
             id={`${inputId}-helper`}

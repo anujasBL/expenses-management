@@ -32,7 +32,6 @@ export const useExpenses = () => {
         // Ensure we return the correct type
         return (response.data || []) as Expense[];
       } catch (err) {
-        console.error('Failed to fetch expenses:', err);
         throw new Error('Failed to load expenses');
       }
     },
@@ -48,7 +47,9 @@ export const useExpenses = () => {
         setError(null);
 
         // Find the category object
-        const category = EXPENSE_CATEGORIES.find(cat => cat.id === formData.category);
+        const category = EXPENSE_CATEGORIES.find(
+          cat => cat.id === formData.category
+        );
         if (!category) {
           throw new Error('Invalid category selected');
         }
@@ -67,38 +68,46 @@ export const useExpenses = () => {
         const createdExpense = await api.expenses.saveNew(newExpense);
         return createdExpense as Expense;
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to add expense';
+        const errorMessage =
+          err instanceof Error ? err.message : 'Failed to add expense';
         setError(errorMessage);
         throw err;
       } finally {
         setIsLoading(false);
       }
     },
-    onSuccess: (newExpense) => {
+    onSuccess: newExpense => {
       // Optimistically update the cache
       queryClient.setQueryData(expensesQueryKey, (oldData: Expense[] = []) => [
         ...oldData,
         newExpense,
       ]);
-      
+
       // Invalidate and refetch to ensure consistency
       queryClient.invalidateQueries({ queryKey: expensesQueryKey });
     },
-    onError: (err) => {
-      console.error('Failed to add expense:', err);
+    onError: err => {
       setError(err instanceof Error ? err.message : 'Failed to add expense');
     },
   });
 
   // Update expense mutation
   const updateExpenseMutation = useMutation({
-    mutationFn: async ({ id, formData }: { id: string; formData: ExpenseFormData }) => {
+    mutationFn: async ({
+      id,
+      formData,
+    }: {
+      id: string;
+      formData: ExpenseFormData;
+    }) => {
       try {
         setIsLoading(true);
         setError(null);
 
         // Find the category object
-        const category = EXPENSE_CATEGORIES.find(cat => cat.id === formData.category);
+        const category = EXPENSE_CATEGORIES.find(
+          cat => cat.id === formData.category
+        );
         if (!category) {
           throw new Error('Invalid category selected');
         }
@@ -108,7 +117,8 @@ export const useExpenses = () => {
           description: formData.description,
           category,
           date: formData.date,
-          createdAt: expenses.find(exp => exp.id === id)?.createdAt || new Date(),
+          createdAt:
+            expenses.find(exp => exp.id === id)?.createdAt || new Date(),
           updatedAt: new Date(),
         };
 
@@ -116,26 +126,26 @@ export const useExpenses = () => {
         const result = await api.expenses.update({ id, ...updatedExpense });
         return result as Expense;
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to update expense';
+        const errorMessage =
+          err instanceof Error ? err.message : 'Failed to update expense';
         setError(errorMessage);
         throw err;
       } finally {
         setIsLoading(false);
       }
     },
-    onSuccess: (updatedExpense) => {
+    onSuccess: updatedExpense => {
       // Optimistically update the cache
       queryClient.setQueryData(expensesQueryKey, (oldData: Expense[] = []) =>
         oldData.map(expense =>
           expense.id === updatedExpense.id ? updatedExpense : expense
         )
       );
-      
+
       // Invalidate and refetch to ensure consistency
       queryClient.invalidateQueries({ queryKey: expensesQueryKey });
     },
-    onError: (err) => {
-      console.error('Failed to update expense:', err);
+    onError: err => {
       setError(err instanceof Error ? err.message : 'Failed to update expense');
     },
   });
@@ -151,24 +161,24 @@ export const useExpenses = () => {
         await api.expenses.delete(expenseId);
         return expenseId;
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to delete expense';
+        const errorMessage =
+          err instanceof Error ? err.message : 'Failed to delete expense';
         setError(errorMessage);
         throw err;
       } finally {
         setIsLoading(false);
       }
     },
-    onSuccess: (deletedExpenseId) => {
+    onSuccess: deletedExpenseId => {
       // Optimistically update the cache
       queryClient.setQueryData(expensesQueryKey, (oldData: Expense[] = []) =>
         oldData.filter(expense => expense.id !== deletedExpenseId)
       );
-      
+
       // Invalidate and refetch to ensure consistency
       queryClient.invalidateQueries({ queryKey: expensesQueryKey });
     },
-    onError: (err) => {
-      console.error('Failed to delete expense:', err);
+    onError: err => {
       setError(err instanceof Error ? err.message : 'Failed to delete expense');
     },
   });
@@ -219,39 +229,42 @@ export const useExpenses = () => {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-    
+
     return getExpensesByDateRange(startOfMonth, endOfMonth);
   }, [getExpensesByDateRange]);
 
   // Get current month total
   const getCurrentMonthTotal = useCallback(() => {
     const currentMonthExpenses = getCurrentMonthExpenses();
-    return currentMonthExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+    return currentMonthExpenses.reduce(
+      (sum, expense) => sum + expense.amount,
+      0
+    );
   }, [getCurrentMonthExpenses]);
 
   return {
     // Data
     expenses,
-    
+
     // Loading states
     isLoading: isLoading || isFetching,
     isFetching,
     isAdding: addExpenseMutation.isPending,
     isUpdating: updateExpenseMutation.isPending,
     isDeleting: deleteExpenseMutation.isPending,
-    
+
     // Error handling
     error,
     clearError,
-    
+
     // Mutations
     addExpense: addExpenseMutation.mutate,
     updateExpense: updateExpenseMutation.mutate,
     deleteExpense: deleteExpenseMutation.mutate,
-    
+
     // Queries
     refetchExpenses,
-    
+
     // Utility functions
     getExpenseById,
     getExpensesByCategory,

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Home, 
-  CreditCard, 
-  BarChart3, 
-  Settings, 
+import {
+  Home,
+  CreditCard,
+  BarChart3,
+  Settings,
   Plus,
   TrendingUp,
   Download,
-  Upload
+  Upload,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -70,7 +70,10 @@ const navigationItems: NavItem[] = [
   },
 ];
 
-export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => {
+export const Sidebar: React.FC<SidebarProps> = ({
+  isOpen = false,
+  onClose,
+}) => {
   const location = useLocation();
 
   const isActiveRoute = (path: string) => {
@@ -80,7 +83,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
   const renderNavItem = (item: NavItem) => {
     const isActive = isActiveRoute(item.to);
     const isExternal = item.to.startsWith('#');
-    
+
     if (isExternal) {
       return (
         <a
@@ -92,9 +95,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
               : 'text-gray-700 hover:text-primary hover:bg-gray-50'
           }`}
         >
-          <item.icon className={`mr-3 h-5 w-5 ${
-            isActive ? 'text-primary' : 'text-gray-400 group-hover:text-primary'
-          }`} />
+          <item.icon
+            className={`mr-3 h-5 w-5 ${
+              isActive
+                ? 'text-primary'
+                : 'text-gray-400 group-hover:text-primary'
+            }`}
+          />
           <span className="flex-1">{item.label}</span>
           {item.badge && (
             <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary text-primary-foreground">
@@ -116,9 +123,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
         }`}
         onClick={onClose}
       >
-        <item.icon className={`mr-3 h-5 w-5 ${
-          isActive ? 'text-primary' : 'text-gray-400 group-hover:text-primary'
-        }`} />
+        <item.icon
+          className={`mr-3 h-5 w-5 ${
+            isActive ? 'text-primary' : 'text-gray-400 group-hover:text-primary'
+          }`}
+        />
         <span className="flex-1">{item.label}</span>
         {item.badge && (
           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary text-primary-foreground">

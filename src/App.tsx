@@ -18,10 +18,9 @@ function App() {
           await api.categories.saveNew(EXPENSE_CATEGORIES[0]); // Save first category to initialize
           // Note: In a real app, you might want to save all categories or handle this differently
         }
-        
+
         setIsInitialized(true);
       } catch (error) {
-        console.error('Failed to initialize app:', error);
         setIsInitialized(true); // Continue anyway
       }
     };
@@ -34,7 +33,9 @@ function App() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-600">Initializing Expenses Management System...</p>
+          <p className="text-gray-600">
+            Initializing Expenses Management System...
+          </p>
         </div>
       </div>
     );

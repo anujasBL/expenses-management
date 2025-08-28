@@ -5,6 +5,7 @@ A modern, full-stack expense tracking application built with React, TypeScript, 
 ## 🚀 **Current Status: Phase 1 Iteration 1 - API Integration**
 
 ### ✅ **Completed Features:**
+
 - **Core Expense Management**: Full CRUD operations via API
 - **API Integration**: Generic API service layer for all entities
 - **React Query**: Advanced state management and caching
@@ -13,6 +14,7 @@ A modern, full-stack expense tracking application built with React, TypeScript, 
 - **Type Safety**: Full TypeScript implementation
 
 ### 🔧 **Technology Stack:**
+
 - **Frontend**: React 18.2+, TypeScript 5.0+
 - **Styling**: Tailwind CSS 3.3+, shadcn/ui components
 - **Form Handling**: React Hook Form 7.45+, Zod 3.22+
@@ -30,17 +32,20 @@ A modern, full-stack expense tracking application built with React, TypeScript, 
 ## 🛠️ **Installation & Setup**
 
 ### 1. **Clone the Repository**
+
 ```bash
 git clone <repository-url>
 cd expenses-management
 ```
 
 ### 2. **Install Dependencies**
+
 ```bash
 npm install
 ```
 
 ### 3. **Environment Configuration**
+
 Create a `.env` file in the root directory:
 
 ```env
@@ -62,6 +67,7 @@ VITE_ENABLE_CHARTS=true
 **Important**: Update `VITE_API_BASE_URL` to point to your actual backend API.
 
 ### 4. **Start Development Server**
+
 ```bash
 npm run dev
 ```
@@ -88,6 +94,7 @@ src/
 ## 🔌 **API Integration**
 
 ### **Generic API Service**
+
 The app uses a generic API service (`src/services/api.ts`) that can handle any entity type:
 
 ```typescript
@@ -102,6 +109,7 @@ const entityApi = api.entity<CustomType>('custom-entity');
 ```
 
 ### **Standard API Endpoints**
+
 - `GET /{entity}` - Get all items
 - `GET /{entity}/{id}` - Get item by ID
 - `POST /{entity}` - Create new item
@@ -110,6 +118,7 @@ const entityApi = api.entity<CustomType>('custom-entity');
 - `PATCH /{entity}/{id}` - Partial update
 
 ### **API Configuration**
+
 - **Base URL**: Configurable via environment variables
 - **Timeout**: Configurable request timeout
 - **Headers**: Automatic JSON content-type handling
@@ -139,17 +148,20 @@ npm run test:coverage # Run tests with coverage
 ## 🌐 **Deployment**
 
 ### **Vercel (Recommended)**
+
 1. Connect your GitHub repository to Vercel
 2. Set environment variables in Vercel dashboard
 3. Deploy automatically on push to main branch
 
 ### **Netlify**
+
 1. Connect your GitHub repository to Netlify
 2. Set build command: `npm run build`
 3. Set publish directory: `dist`
 4. Configure environment variables
 
 ### **GitHub Pages**
+
 1. Run `npm run build`
 2. Push `dist` folder to `gh-pages` branch
 3. Enable GitHub Pages in repository settings
@@ -157,18 +169,21 @@ npm run test:coverage # Run tests with coverage
 ## 🔧 **Development Guidelines**
 
 ### **Code Style**
+
 - Use TypeScript strict mode
 - Follow ESLint and Prettier configurations
 - Use functional components with hooks
 - Implement proper error handling
 
 ### **API Integration**
+
 - Use the generic API service for all backend operations
 - Implement proper loading and error states
 - Use React Query for caching and state management
 - Handle API errors gracefully
 
 ### **Component Structure**
+
 - One component per file
 - Use PascalCase for component names
 - Implement proper prop validation
@@ -179,23 +194,28 @@ npm run test:coverage # Run tests with coverage
 ### **Common Issues**
 
 #### **API Connection Errors**
+
 - Verify `VITE_API_BASE_URL` is correct
 - Check if backend service is running
 - Verify CORS configuration on backend
 - Check network connectivity
 
 #### **Build Errors**
+
 - Ensure all dependencies are installed: `npm install`
 - Clear node_modules and reinstall: `rm -rf node_modules && npm install`
 - Check TypeScript configuration: `npm run type-check`
 
 #### **Runtime Errors**
+
 - Check browser console for error messages
 - Verify environment variables are loaded
 - Check API endpoint responses
 
 ### **Debug Mode**
+
 Enable debug logging by setting:
+
 ```env
 VITE_APP_ENVIRONMENT=development
 ```

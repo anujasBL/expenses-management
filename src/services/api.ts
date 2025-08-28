@@ -3,7 +3,15 @@
  * Implements the standard API endpoints: GET_ALL, GET_BY_ID, SAVE_NEW, UPDATE, DELETE
  */
 
-import { ApiConfig, ApiRequestOptions, ApiResponse, PaginatedResponse, BaseEntity } from '@/types';
+import {
+  ApiConfig,
+  ApiRequestOptions,
+  ApiResponse,
+  PaginatedResponse,
+  BaseEntity,
+  Expense,
+  ExpenseCategory,
+} from '@/types';
 import { APP_CONFIG } from '@/constants';
 
 class ApiService {
@@ -15,7 +23,7 @@ class ApiService {
       timeout: APP_CONFIG.apiTimeout,
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     };
   }
@@ -28,7 +36,7 @@ class ApiService {
     options: ApiRequestOptions
   ): Promise<ApiResponse<T>> {
     const url = new URL(endpoint, this.config.baseUrl);
-    
+
     // Add query parameters
     if (options.params) {
       Object.entries(options.params).forEach(([key, value]) => {
@@ -53,7 +61,7 @@ class ApiService {
 
     try {
       const response = await fetch(url.toString(), requestOptions);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -61,8 +69,9 @@ class ApiService {
       const data = await response.json();
       return data as ApiResponse<T>;
     } catch (error) {
-      console.error('API request failed:', error);
-      throw new Error(`API request failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `API request failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -88,16 +97,10 @@ class ApiService {
    * Generic GET_BY_ID operation for any entity
    * GET /{entity}/{item_id}
    */
-  async getById<T extends BaseEntity>(
-    entity: string,
-    id: string
-  ): Promise<T> {
-    const response = await this.makeRequest<T>(
-      `/${entity}/${id}`,
-      {
-        method: 'GET',
-      }
-    );
+  async getById<T extends BaseEntity>(entity: string, id: string): Promise<T> {
+    const response = await this.makeRequest<T>(`/${entity}/${id}`, {
+      method: 'GET',
+    });
     return response.data;
   }
 
@@ -109,13 +112,10 @@ class ApiService {
     entity: string,
     data: Partial<T>
   ): Promise<T> {
-    const response = await this.makeRequest<T>(
-      `/${entity}`,
-      {
-        method: 'POST',
-        body: data,
-      }
-    );
+    const response = await this.makeRequest<T>(`/${entity}`, {
+      method: 'POST',
+      body: data,
+    });
     return response.data;
   }
 
@@ -128,13 +128,10 @@ class ApiService {
     data: Partial<T> & { id: string }
   ): Promise<T> {
     const { id, ...updateData } = data;
-    const response = await this.makeRequest<T>(
-      `/${entity}/${id}`,
-      {
-        method: 'PUT',
-        body: updateData,
-      }
-    );
+    const response = await this.makeRequest<T>(`/${entity}/${id}`, {
+      method: 'PUT',
+      body: updateData,
+    });
     return response.data;
   }
 
@@ -143,12 +140,9 @@ class ApiService {
    * DELETE /{entity}/{item_id}
    */
   async delete(entity: string, id: string): Promise<void> {
-    await this.makeRequest(
-      `/${entity}/${id}`,
-      {
-        method: 'DELETE',
-      }
-    );
+    await this.makeRequest(`/${entity}/${id}`, {
+      method: 'DELETE',
+    });
   }
 
   /**
@@ -160,13 +154,10 @@ class ApiService {
     data: Partial<T> & { id: string }
   ): Promise<T> {
     const { id, ...patchData } = data;
-    const response = await this.makeRequest<T>(
-      `/${entity}/${id}`,
-      {
-        method: 'PATCH',
-        body: patchData,
-      }
-    );
+    const response = await this.makeRequest<T>(`/${entity}/${id}`, {
+      method: 'PATCH',
+      body: patchData,
+    });
     return response.data;
   }
 
@@ -205,10 +196,10 @@ export const api = {
     getAll: (params?: Record<string, string | number | boolean>) =>
       apiService.getAll('expenses', params),
     getById: (id: string) => apiService.getById('expenses', id),
-    saveNew: (data: any) => apiService.saveNew('expenses', data),
-    update: (data: any) => apiService.update('expenses', data),
+    saveNew: (data: Partial<Expense>) => apiService.saveNew('expenses', data),
+    update: (data: Partial<Expense> & { id: string }) => apiService.update('expenses', data),
     delete: (id: string) => apiService.delete('expenses', id),
-    patch: (data: any) => apiService.patch('expenses', data),
+    patch: (data: Partial<Expense> & { id: string }) => apiService.patch('expenses', data),
   },
 
   // Category operations
@@ -216,10 +207,10 @@ export const api = {
     getAll: (params?: Record<string, string | number | boolean>) =>
       apiService.getAll('categories', params),
     getById: (id: string) => apiService.getById('categories', id),
-    saveNew: (data: any) => apiService.saveNew('categories', data),
-    update: (data: any) => apiService.update('categories', data),
+    saveNew: (data: Partial<ExpenseCategory>) => apiService.saveNew('categories', data),
+    update: (data: Partial<ExpenseCategory> & { id: string }) => apiService.update('categories', data),
     delete: (id: string) => apiService.delete('categories', id),
-    patch: (data: any) => apiService.patch('categories', data),
+    patch: (data: Partial<ExpenseCategory> & { id: string }) => apiService.patch('categories', data),
   },
 
   // Generic entity operations
@@ -227,9 +218,11 @@ export const api = {
     getAll: (params?: Record<string, string | number | boolean>) =>
       apiService.getAll<T>(entityName, params),
     getById: (id: string) => apiService.getById<T>(entityName, id),
-                saveNew: (data: Partial<T>) => apiService.saveNew<T>(entityName, data),
-            update: (data: Partial<T> & { id: string }) => apiService.update<T>(entityName, data),
-            delete: (id: string) => apiService.delete(entityName, id),
-            patch: (data: Partial<T> & { id: string }) => apiService.patch<T>(entityName, data),
+    saveNew: (data: Partial<T>) => apiService.saveNew<T>(entityName, data),
+    update: (data: Partial<T> & { id: string }) =>
+      apiService.update<T>(entityName, data),
+    delete: (id: string) => apiService.delete(entityName, id),
+    patch: (data: Partial<T> & { id: string }) =>
+      apiService.patch<T>(entityName, data),
   }),
 };

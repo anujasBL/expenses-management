@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
+import { UserEvent } from '@testing-library/user-event';
+import { ExpenseFormData } from '@/types';
 
 // Create a custom render function that includes providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
@@ -19,9 +21,7 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        {children}
-      </BrowserRouter>
+      <BrowserRouter>{children}</BrowserRouter>
     </QueryClientProvider>
   );
 };
@@ -40,7 +40,7 @@ export { customRender as render };
 // Test data helpers
 export const createMockExpense = (overrides = {}) => ({
   id: 'test-expense-1',
-  amount: 25.50,
+  amount: 25.5,
   description: 'Test expense',
   category: {
     id: '1',
@@ -80,20 +80,30 @@ export const waitForElementToBeRemoved = (element: HTMLElement) =>
   });
 
 // Form testing helpers
-export const fillExpenseForm = async (user: any, formData: any) => {
-  const amountInput = document.querySelector('input[name="amount"]') as HTMLInputElement;
-  const descriptionInput = document.querySelector('input[name="description"]') as HTMLInputElement;
-  const categorySelect = document.querySelector('select[name="category"]') as HTMLSelectElement;
-  const dateInput = document.querySelector('input[name="date"]') as HTMLInputElement;
+export const fillExpenseForm = async (user: UserEvent, formData: ExpenseFormData) => {
+  const amountInput = document.querySelector(
+    'input[name="amount"]'
+  ) as HTMLInputElement;
+  const descriptionInput = document.querySelector(
+    'input[name="description"]'
+  ) as HTMLInputElement;
+  const categorySelect = document.querySelector(
+    'select[name="category"]'
+  ) as HTMLSelectElement;
+  const dateInput = document.querySelector(
+    'input[name="date"]'
+  ) as HTMLInputElement;
 
   if (amountInput) await user.type(amountInput, formData.amount.toString());
   if (descriptionInput) await user.type(descriptionInput, formData.description);
-  if (categorySelect) await user.selectOptions(categorySelect, formData.category);
-  if (dateInput) await user.type(dateInput, formData.date.toISOString().split('T')[0]);
+  if (categorySelect)
+    await user.selectOptions(categorySelect, formData.category);
+  if (dateInput)
+    await user.type(dateInput, formData.date.toISOString().split('T')[0]);
 };
 
 // Mock API responses
-export const mockApiSuccess = (data: any) => ({
+export const mockApiSuccess = <T,>(data: T) => ({
   success: true,
   data,
   message: 'Operation successful',
@@ -108,7 +118,7 @@ export const mockApiError = (error: string) => ({
 // Storage mocking
 export const mockLocalStorage = () => {
   const store: Record<string, string> = {};
-  
+
   return {
     getItem: jest.fn((key: string) => store[key] || null),
     setItem: jest.fn((key: string, value: string) => {

@@ -5,16 +5,19 @@
 ### Option 1: Vercel (Recommended for Hackathons)
 
 1. **Install Vercel CLI:**
+
    ```bash
    npm i -g vercel
    ```
 
 2. **Login to Vercel:**
+
    ```bash
    vercel login
    ```
 
 3. **Deploy:**
+
    ```bash
    vercel
    ```
@@ -30,6 +33,7 @@
 ### Option 2: Netlify
 
 1. **Build the project:**
+
    ```bash
    npm run build
    ```
@@ -45,6 +49,7 @@
 ### Option 3: GitHub Pages
 
 1. **Build the project:**
+
    ```bash
    npm run build
    ```
@@ -68,6 +73,7 @@
 
 Create a `.env.production` file:
 https://test-6-bgwl.onrender.com
+
 ```env
 VITE_APP_ENVIRONMENT=production
 VITE_API_BASE_URL=https://test-6-bgwl.onrender.com
@@ -97,11 +103,13 @@ After deployment, test:
 ### Build Failures
 
 1. **Check Node.js version:**
+
    ```bash
    node --version  # Should be 18.18.0+
    ```
 
 2. **Clear dependencies:**
+
    ```bash
    rm -rf node_modules package-lock.json
    npm install
@@ -121,6 +129,7 @@ After deployment, test:
 ### Performance Issues
 
 1. **Optimize bundle size:**
+
    ```bash
    npm run build
    # Check dist folder size

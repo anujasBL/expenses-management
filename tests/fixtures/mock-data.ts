@@ -48,7 +48,7 @@ export const mockCategories: ExpenseCategory[] = [
 export const mockExpenses: Expense[] = [
   {
     id: '1',
-    amount: 25.50,
+    amount: 25.5,
     description: 'Lunch at Subway',
     category: mockCategories[0],
     date: new Date('2024-01-15'),
@@ -57,7 +57,7 @@ export const mockExpenses: Expense[] = [
   },
   {
     id: '2',
-    amount: 45.00,
+    amount: 45.0,
     description: 'Gas station fill-up',
     category: mockCategories[1],
     date: new Date('2024-01-14'),
@@ -75,7 +75,7 @@ export const mockExpenses: Expense[] = [
   },
   {
     id: '4',
-    amount: 15.00,
+    amount: 15.0,
     description: 'Movie ticket',
     category: mockCategories[3],
     date: new Date('2024-01-12'),
@@ -84,7 +84,7 @@ export const mockExpenses: Expense[] = [
   },
   {
     id: '5',
-    amount: 75.00,
+    amount: 75.0,
     description: 'Doctor appointment',
     category: mockCategories[4],
     date: new Date('2024-01-11'),
@@ -94,7 +94,7 @@ export const mockExpenses: Expense[] = [
 ];
 
 export const mockExpenseFormData = {
-  amount: 35.00,
+  amount: 35.0,
   description: 'Coffee and pastry',
   category: 'food',
   date: new Date('2024-01-16'),

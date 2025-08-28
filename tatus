@@ -1,0 +1,98 @@
+warning: in the working copy of '.eslintrc.cjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.github/workflows/ci.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.prettierrc', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'DEPLOYMENT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/development-roadmap.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/software-requirements-specification.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/user-stories.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'jest.config.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'playwright.config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'postcss.config.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'rules/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'rules/development-roadmap-prompt.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'rules/mvp-coding-prompt.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'rules/pre-push-quality-gate-prompt.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'rules/software-requirements-specification-prompt.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'rules/testing-suite-prompt.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'rules/user-stories-prompt.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/App.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/expenses/ExpenseList.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/forms/ExpenseForm.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/layout/Header.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/layout/Layout.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/layout/Sidebar.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/pages/Dashboard.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/pages/Expenses.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/ui/Button.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/ui/Card.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/ui/Input.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/ui/Select.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/constants/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/hooks/useExpenses.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/index.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/services/api.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/services/storage.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/types/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tailwind.config.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'testing-suite.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/fixtures/mock-data.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/setup.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/unit/components/ExpenseForm.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/unit/components/ExpenseList.test.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/utils/test-utils.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tsconfig.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tsconfig.node.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'vercel.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'vite.config.ts', LF will be replaced by CRLF the next time Git touches it
+.eslintrc.cjs
+.github/workflows/ci.yml
+DEPLOYMENT.md
+README.md
+docs/development-roadmap.md
+docs/software-requirements-specification.md
+docs/user-stories.md
+index.html
+package-lock.json
+package.json
+playwright.config.ts
+postcss.config.js
+rules/README.md
+rules/development-roadmap-prompt.md
+rules/mvp-coding-prompt.md
+rules/pre-push-quality-gate-prompt.md
+rules/software-requirements-specification-prompt.md
+rules/testing-suite-prompt.md
+rules/user-stories-prompt.md
+src/App.tsx
+src/components/expenses/ExpenseList.tsx
+src/components/forms/ExpenseForm.tsx
+src/components/layout/Header.tsx
+src/components/layout/Sidebar.tsx
+src/components/pages/Dashboard.tsx
+src/components/pages/Expenses.tsx
+src/components/ui/Button.tsx
+src/components/ui/Card.tsx
+src/components/ui/Input.tsx
+src/components/ui/Select.tsx
+src/hooks/useExpenses.ts
+src/index.css
+src/main.tsx
+src/services/api.ts
+src/services/storage.ts
+src/types/index.ts
+tailwind.config.js
+testing-suite.md
+tests/e2e/user-workflows/expense-management.spec.ts
+tests/fixtures/mock-data.ts
+tests/integration/component-interactions/ExpenseManagement.test.tsx
+tests/setup.ts
+tests/unit/components/ExpenseForm.test.tsx
+tests/unit/components/ExpenseList.test.tsx
+tests/unit/hooks/useExpenses.test.ts
+tests/utils/test-utils.tsx
+vite.config.ts

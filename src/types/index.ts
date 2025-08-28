@@ -85,7 +85,12 @@ export interface BaseEntity {
   updatedAt: Date;
 }
 
-export type ApiOperation = 'GET_ALL' | 'GET_BY_ID' | 'SAVE_NEW' | 'UPDATE' | 'DELETE';
+export type ApiOperation =
+  | 'GET_ALL'
+  | 'GET_BY_ID'
+  | 'SAVE_NEW'
+  | 'UPDATE'
+  | 'DELETE';
 
 export interface ApiConfig {
   baseUrl: string;

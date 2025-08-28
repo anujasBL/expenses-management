@@ -8,7 +8,10 @@ interface HeaderProps {
   isMenuOpen?: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false }) => {
+export const Header: React.FC<HeaderProps> = ({
+  onMenuToggle,
+  isMenuOpen = false,
+}) => {
   const location = useLocation();
 
   const isActiveRoute = (path: string) => {
@@ -29,9 +32,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false
                 <h1 className="text-xl font-semibold text-gray-900">
                   {APP_CONFIG.name}
                 </h1>
-                <p className="text-sm text-gray-500">
-                  v{APP_CONFIG.version}
-                </p>
+                <p className="text-sm text-gray-500">v{APP_CONFIG.version}</p>
               </div>
             </Link>
           </div>

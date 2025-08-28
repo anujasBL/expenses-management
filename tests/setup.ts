@@ -62,7 +62,8 @@ jest.mock('cloudinary', () => ({
     uploader: {
       upload: jest.fn().mockResolvedValue({
         public_id: 'test_image_123',
-        secure_url: 'https://res.cloudinary.com/test/image/upload/test_image_123.jpg',
+        secure_url:
+          'https://res.cloudinary.com/test/image/upload/test_image_123.jpg',
         width: 800,
         height: 600,
       }),
@@ -70,7 +71,11 @@ jest.mock('cloudinary', () => ({
     },
     image: jest.fn().mockReturnValue({
       transformation: jest.fn().mockReturnThis(),
-      toURL: jest.fn().mockReturnValue('https://res.cloudinary.com/test/image/upload/test_image_123.jpg'),
+      toURL: jest
+        .fn()
+        .mockReturnValue(
+          'https://res.cloudinary.com/test/image/upload/test_image_123.jpg'
+        ),
     }),
   },
 }));
@@ -82,8 +87,8 @@ jest.mock('uuid', () => ({
 
 // Mock date-fns
 jest.mock('date-fns', () => ({
-  format: jest.fn((date) => date.toISOString().split('T')[0]),
-  parseISO: jest.fn((dateString) => new Date(dateString)),
+  format: jest.fn(date => date.toISOString().split('T')[0]),
+  parseISO: jest.fn(dateString => new Date(dateString)),
   isToday: jest.fn(() => false),
   isYesterday: jest.fn(() => false),
 }));

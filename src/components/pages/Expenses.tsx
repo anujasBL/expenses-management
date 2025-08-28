@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { ExpenseForm } from '@/components/forms/ExpenseForm';
 import { ExpenseList } from '@/components/expenses/ExpenseList';
@@ -29,7 +35,6 @@ export const Expenses: React.FC = () => {
       setShowForm(false);
       clearError();
     } catch (error) {
-      console.error('Failed to add expense:', error);
       // Error is handled by the hook
     }
   };
@@ -42,7 +47,6 @@ export const Expenses: React.FC = () => {
       setEditingExpense(null);
       clearError();
     } catch (error) {
-      console.error('Failed to update expense:', error);
       // Error is handled by the hook
     }
   };
@@ -52,7 +56,6 @@ export const Expenses: React.FC = () => {
       await deleteExpense(expenseId);
       clearError();
     } catch (error) {
-      console.error('Failed to delete expense:', error);
       // Error is handled by the hook
     }
   };
@@ -152,10 +155,9 @@ export const Expenses: React.FC = () => {
                       {editingExpense ? 'Edit Expense' : 'Add Expense'}
                     </CardTitle>
                     <CardDescription>
-                      {editingExpense 
+                      {editingExpense
                         ? 'Update the expense details below'
-                        : 'Fill in the expense details below'
-                      }
+                        : 'Fill in the expense details below'}
                     </CardDescription>
                   </div>
                   <Button
@@ -207,13 +209,13 @@ export const Expenses: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Expenses
+              </CardTitle>
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {expenses.length}
-              </div>
+              <div className="text-2xl font-bold">{expenses.length}</div>
               <p className="text-xs text-muted-foreground">
                 Total expense entries
               </p>
@@ -222,16 +224,16 @@ export const Expenses: React.FC = () => {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Amount</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Amount
+              </CardTitle>
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
                 ${getTotalAmount().toFixed(2)}
               </div>
-              <p className="text-xs text-muted-foreground">
-                Combined spending
-              </p>
+              <p className="text-xs text-muted-foreground">Combined spending</p>
             </CardContent>
           </Card>
 

@@ -1,6 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Plus, TrendingUp, CreditCard, BarChart3 } from 'lucide-react';
 
@@ -12,14 +18,13 @@ export const Dashboard: React.FC = () => {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="mt-2 text-gray-600">
-            Welcome to your expenses management system. Track, analyze, and manage your spending.
+            Welcome to your expenses management system. Track, analyze, and
+            manage your spending.
           </p>
         </div>
         <div className="mt-4 sm:mt-0">
           <Link to="/expenses">
-            <Button leftIcon={<Plus className="h-4 w-4" />}>
-              Add Expense
-            </Button>
+            <Button leftIcon={<Plus className="h-4 w-4" />}>Add Expense</Button>
           </Link>
         </div>
       </div>
@@ -28,14 +33,14 @@ export const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Expenses
+            </CardTitle>
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">$0.00</div>
-            <p className="text-xs text-muted-foreground">
-              No expenses yet
-            </p>
+            <p className="text-xs text-muted-foreground">No expenses yet</p>
           </CardContent>
         </Card>
 
@@ -72,9 +77,7 @@ export const Dashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">$0.00</div>
-            <p className="text-xs text-muted-foreground">
-              Per expense
-            </p>
+            <p className="text-xs text-muted-foreground">Per expense</p>
           </CardContent>
         </Card>
       </div>
@@ -85,19 +88,22 @@ export const Dashboard: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle>Recent Expenses</CardTitle>
-            <CardDescription>
-              Your latest expense entries
-            </CardDescription>
+            <CardDescription>Your latest expense entries</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-center py-8">
               <CreditCard className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No expenses yet</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No expenses yet
+              </h3>
               <p className="text-gray-500 mb-4">
                 Start tracking your expenses by adding your first entry.
               </p>
               <Link to="/expenses">
-                <Button variant="outline" leftIcon={<Plus className="h-4 w-4" />}>
+                <Button
+                  variant="outline"
+                  leftIcon={<Plus className="h-4 w-4" />}
+                >
                   Add First Expense
                 </Button>
               </Link>
@@ -109,14 +115,14 @@ export const Dashboard: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle>Category Breakdown</CardTitle>
-            <CardDescription>
-              Spending distribution by category
-            </CardDescription>
+            <CardDescription>Spending distribution by category</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-center py-8">
               <BarChart3 className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No data to display</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No data to display
+              </h3>
               <p className="text-gray-500">
                 Add some expenses to see your spending patterns.
               </p>
@@ -129,26 +135,40 @@ export const Dashboard: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>
-            Common tasks and shortcuts
-          </CardDescription>
+          <CardDescription>Common tasks and shortcuts</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link to="/expenses">
-              <Button variant="outline" className="h-20 flex-col w-full" leftIcon={<Plus className="h-6 w-6" />}>
+              <Button
+                variant="outline"
+                className="h-20 flex-col w-full"
+                leftIcon={<Plus className="h-6 w-6" />}
+              >
                 <span className="mt-2">Add Expense</span>
               </Button>
             </Link>
             <Link to="/expenses">
-              <Button variant="outline" className="h-20 flex-col w-full" leftIcon={<BarChart3 className="h-6 w-6" />}>
+              <Button
+                variant="outline"
+                className="h-20 flex-col w-full"
+                leftIcon={<BarChart3 className="h-6 w-6" />}
+              >
                 <span className="mt-2">View Expenses</span>
               </Button>
             </Link>
-            <Button variant="outline" className="h-20 flex-col" leftIcon={<TrendingUp className="h-6 w-6" />}>
+            <Button
+              variant="outline"
+              className="h-20 flex-col"
+              leftIcon={<TrendingUp className="h-6 w-6" />}
+            >
               <span className="mt-2">Export Data</span>
             </Button>
-            <Button variant="outline" className="h-20 flex-col" leftIcon={<CreditCard className="h-6 w-6" />}>
+            <Button
+              variant="outline"
+              className="h-20 flex-col"
+              leftIcon={<CreditCard className="h-6 w-6" />}
+            >
               <span className="mt-2">Manage Categories</span>
             </Button>
           </div>
@@ -170,9 +190,12 @@ export const Dashboard: React.FC = () => {
                 1
               </div>
               <div>
-                <h4 className="font-medium text-gray-900">Add Your First Expense</h4>
+                <h4 className="font-medium text-gray-900">
+                  Add Your First Expense
+                </h4>
                 <p className="text-sm text-gray-600">
-                  Click the "Add Expense" button to record your first expense entry.
+                  Click the "Add Expense" button to record your first expense
+                  entry.
                 </p>
               </div>
             </div>
@@ -181,7 +204,9 @@ export const Dashboard: React.FC = () => {
                 2
               </div>
               <div>
-                <h4 className="font-medium text-gray-900">Categorize Your Expenses</h4>
+                <h4 className="font-medium text-gray-900">
+                  Categorize Your Expenses
+                </h4>
                 <p className="text-sm text-gray-600">
                   Use the predefined categories to organize your spending.
                 </p>
@@ -192,7 +217,9 @@ export const Dashboard: React.FC = () => {
                 3
               </div>
               <div>
-                <h4 className="font-medium text-gray-900">View Your Analytics</h4>
+                <h4 className="font-medium text-gray-900">
+                  View Your Analytics
+                </h4>
                 <p className="text-sm text-gray-600">
                   Monitor your spending patterns and track your budget.
                 </p>
