@@ -70,7 +70,7 @@ Create a `.env.production` file:
 
 ```env
 VITE_APP_ENVIRONMENT=production
-VITE_API_BASE_URL=https://your-api-domain.com
+VITE_API_BASE_URL=https://test-2-enc8.onrender.com
 VITE_ENABLE_ANALYTICS=true
 VITE_ENABLE_EXPORT_IMPORT=true
 VITE_ENABLE_CHARTS=true

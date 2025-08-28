@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Plus, TrendingUp, CreditCard, BarChart3 } from 'lucide-react';
@@ -15,9 +16,11 @@ export const Dashboard: React.FC = () => {
           </p>
         </div>
         <div className="mt-4 sm:mt-0">
-          <Button leftIcon={<Plus className="h-4 w-4" />}>
-            Add Expense
-          </Button>
+          <Link to="/expenses">
+            <Button leftIcon={<Plus className="h-4 w-4" />}>
+              Add Expense
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -93,9 +96,11 @@ export const Dashboard: React.FC = () => {
               <p className="text-gray-500 mb-4">
                 Start tracking your expenses by adding your first entry.
               </p>
-              <Button variant="outline" leftIcon={<Plus className="h-4 w-4" />}>
-                Add First Expense
-              </Button>
+              <Link to="/expenses">
+                <Button variant="outline" leftIcon={<Plus className="h-4 w-4" />}>
+                  Add First Expense
+                </Button>
+              </Link>
             </div>
           </CardContent>
         </Card>
@@ -130,12 +135,16 @@ export const Dashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-20 flex-col" leftIcon={<Plus className="h-6 w-6" />}>
-              <span className="mt-2">Add Expense</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col" leftIcon={<BarChart3 className="h-6 w-6" />}>
-              <span className="mt-2">View Analytics</span>
-            </Button>
+            <Link to="/expenses">
+              <Button variant="outline" className="h-20 flex-col w-full" leftIcon={<Plus className="h-6 w-6" />}>
+                <span className="mt-2">Add Expense</span>
+              </Button>
+            </Link>
+            <Link to="/expenses">
+              <Button variant="outline" className="h-20 flex-col w-full" leftIcon={<BarChart3 className="h-6 w-6" />}>
+                <span className="mt-2">View Expenses</span>
+              </Button>
+            </Link>
             <Button variant="outline" className="h-20 flex-col" leftIcon={<TrendingUp className="h-6 w-6" />}>
               <span className="mt-2">Export Data</span>
             </Button>

@@ -338,4 +338,4 @@ export const indexedDBService = new IndexedDBService();
 export const storageService: StorageService = localStorageService;
 
 // Export types
-export type { StorageService };
+

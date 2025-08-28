@@ -5,11 +5,11 @@
 import { ExpenseCategory } from '@/types';
 
 export const APP_CONFIG = {
-  name: import.meta.env.VITE_APP_NAME || 'Expenses Management System',
-  version: import.meta.env.VITE_APP_VERSION || '0.1.0',
-  environment: import.meta.env.VITE_APP_ENVIRONMENT || 'development',
-  apiBaseUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
-  apiTimeout: parseInt(import.meta.env.VITE_API_TIMEOUT || '10000'),
+  name: 'Expenses Management System',
+  version: '0.1.0',
+  environment: 'development',
+  apiBaseUrl: 'https://test-2-enc8.onrender.com',
+  apiTimeout: 10000,
 } as const;
 
 export const EXPENSE_CATEGORIES: ExpenseCategory[] = [
@@ -105,7 +105,7 @@ export const CURRENCY = {
 } as const;
 
 export const FEATURE_FLAGS = {
-  analytics: import.meta.env.VITE_ENABLE_ANALYTICS === 'true',
-  exportImport: import.meta.env.VITE_ENABLE_EXPORT_IMPORT === 'true',
-  charts: import.meta.env.VITE_ENABLE_CHARTS === 'true',
+  analytics: true,
+  exportImport: true,
+  charts: true,
 } as const;

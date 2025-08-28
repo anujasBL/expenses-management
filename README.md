@@ -1,61 +1,51 @@
 # Expenses Management System
 
-A modern, responsive web application for tracking and managing personal and business expenses. Built with React, TypeScript, Tailwind CSS, and shadcn/ui components.
+A modern, full-stack expense tracking application built with React, TypeScript, and Tailwind CSS. This application is designed to help users manage personal and business expenses with a clean, intuitive interface.
 
-## 🚀 Features
+## 🚀 **Current Status: Phase 1 Iteration 1 - API Integration**
 
-- **Expense Tracking**: Add, view, edit, and delete expense records
-- **Category Management**: Predefined expense categories with visual identification
-- **Data Persistence**: Local storage with IndexedDB fallback
-- **Responsive Design**: Mobile-first approach with cross-device compatibility
-- **Analytics Dashboard**: Spending summaries and category breakdowns
-- **Data Export/Import**: Backup and restore functionality
-- **Modern UI**: Clean, accessible interface built with shadcn/ui
+### ✅ **Completed Features:**
+- **Core Expense Management**: Full CRUD operations via API
+- **API Integration**: Generic API service layer for all entities
+- **React Query**: Advanced state management and caching
+- **Form Validation**: React Hook Form with Zod schemas
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Type Safety**: Full TypeScript implementation
 
-## 🛠️ Technology Stack
-
+### 🔧 **Technology Stack:**
 - **Frontend**: React 18.2+, TypeScript 5.0+
 - **Styling**: Tailwind CSS 3.3+, shadcn/ui components
 - **Form Handling**: React Hook Form 7.45+, Zod 3.22+
-- **State Management**: React Query 5.0+ (for patterns), localStorage
-- **Charts**: Recharts 2.8+
-- **Icons**: Lucide React 0.263+
+- **State Management**: React Query 5.0+ (TanStack Query)
+- **API Layer**: Generic REST API service for any entity type
 - **Build Tool**: Vite 5.0+
+- **Routing**: React Router DOM
 
-## 📋 Prerequisites
+## 📋 **Prerequisites**
 
-- Node.js 18.18.0 or higher
-- npm 9.0.0 or higher
-- Modern web browser with JavaScript enabled
+- **Node.js**: 18.18.0 or higher
+- **npm**: 8.0.0 or higher
+- **API Backend**: Running backend service (see configuration below)
 
-## 🚀 Quick Start
+## 🛠️ **Installation & Setup**
 
-### 1. Clone the Repository
-
+### 1. **Clone the Repository**
 ```bash
 git clone <repository-url>
-cd expenses-management-system
+cd expenses-management
 ```
 
-### 2. Install Dependencies
-
+### 2. **Install Dependencies**
 ```bash
 npm install
 ```
 
-### 3. Set Up Environment Variables
-
-Copy the environment template and configure your settings:
-
-```bash
-cp env.example .env.local
-```
-
-Edit `.env.local` with your configuration:
+### 3. **Environment Configuration**
+Create a `.env` file in the root directory:
 
 ```env
 # API Configuration
-VITE_API_BASE_URL=http://localhost:3000
+VITE_API_BASE_URL=https://your-api-backend.com
 VITE_API_TIMEOUT=10000
 
 # App Configuration
@@ -69,160 +59,169 @@ VITE_ENABLE_EXPORT_IMPORT=true
 VITE_ENABLE_CHARTS=true
 ```
 
-### 4. Start Development Server
+**Important**: Update `VITE_API_BASE_URL` to point to your actual backend API.
 
+### 4. **Start Development Server**
 ```bash
 npm run dev
 ```
 
 The application will be available at `http://localhost:3000`
 
-### 5. Build for Production
-
-```bash
-npm run build
-```
-
-### 6. Preview Production Build
-
-```bash
-npm run preview
-```
-
-## 📁 Project Structure
+## 🏗️ **Project Structure**
 
 ```
 src/
-├── components/          # React components
-│   ├── ui/            # Reusable UI components (shadcn/ui)
-│   ├── forms/         # Form components
-│   ├── layout/        # Layout components
-│   └── pages/         # Page components
-├── hooks/             # Custom React hooks
-├── lib/               # Utility functions and configurations
-├── services/          # API and storage services
-├── types/             # TypeScript type definitions
-├── utils/             # Helper functions
-└── constants/         # Application constants
+├── components/
+│   ├── ui/           # shadcn/ui components
+│   ├── forms/        # Form components (ExpenseForm)
+│   ├── layout/       # Layout components (Header, Sidebar)
+│   ├── pages/        # Page components (Dashboard, Expenses)
+│   └── expenses/     # Expense-specific components (ExpenseList)
+├── hooks/            # Custom React hooks (useExpenses)
+├── services/         # API and storage services
+├── types/            # TypeScript interfaces
+├── constants/        # Application constants
+└── utils/            # Utility functions
 ```
 
-## 🔧 Available Scripts
+## 🔌 **API Integration**
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
-- `npm run format` - Format code with Prettier
-- `npm run type-check` - Run TypeScript type checking
+### **Generic API Service**
+The app uses a generic API service (`src/services/api.ts`) that can handle any entity type:
 
-## 🎯 Development Phases
+```typescript
+// Example usage
+const expenses = await api.expenses.getAll();
+const newExpense = await api.expenses.saveNew(expenseData);
+const updatedExpense = await api.expenses.update({ id, ...data });
+await api.expenses.delete(id);
 
-### Phase 0: Bootstrap & Setup ✅
-- Project initialization and foundation setup
-- Basic layout and navigation components
-- Generic API service layer
-- Local storage implementation
-
-### Phase 1: Core Development (Planned)
-- Expense management functionality
-- Category system implementation
-- Basic analytics and reporting
-
-### Phase 2: Enhancement (Planned)
-- Advanced features and optimizations
-- User experience improvements
-- Performance optimizations
-
-### Phase 3: Deployment (Planned)
-- Final testing and validation
-- Production deployment
-- Documentation and handover
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. Install Vercel CLI:
-```bash
-npm i -g vercel
+// Generic entity operations
+const entityApi = api.entity<CustomType>('custom-entity');
 ```
 
-2. Deploy:
-```bash
-vercel
-```
+### **Standard API Endpoints**
+- `GET /{entity}` - Get all items
+- `GET /{entity}/{id}` - Get item by ID
+- `POST /{entity}` - Create new item
+- `PUT /{entity}/{id}` - Update item
+- `DELETE /{entity}/{id}` - Delete item
+- `PATCH /{entity}/{id}` - Partial update
 
-### Netlify
+### **API Configuration**
+- **Base URL**: Configurable via environment variables
+- **Timeout**: Configurable request timeout
+- **Headers**: Automatic JSON content-type handling
+- **Error Handling**: Comprehensive error handling and logging
 
-1. Build the project:
-```bash
-npm run build
-```
-
-2. Deploy the `dist` folder to Netlify
-
-### GitHub Pages
-
-1. Build the project:
-```bash
-npm run build
-```
-
-2. Push the `dist` folder to the `gh-pages` branch
-
-## 🔌 API Integration
-
-The application includes a generic API service layer that implements standard CRUD endpoints:
-
-- `GET /{entity}` - Retrieve all entities
-- `GET /{entity}/{id}` - Retrieve entity by ID
-- `POST /{entity}` - Create new entity
-- `PUT /{entity}/{id}` - Update entity
-- `DELETE /{entity}/{id}` - Delete entity
-
-## 📱 Browser Support
-
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-## 🧪 Testing
-
-Run the test suite:
+## 📱 **Available Scripts**
 
 ```bash
-npm test
+# Development
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+
+# Code Quality
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint issues
+npm run type-check   # Run TypeScript type checking
+npm run format       # Format code with Prettier
+npm run format:check # Check code formatting
+
+# Testing
+npm test             # Run tests (when implemented)
+npm run test:watch   # Run tests in watch mode
+npm run test:coverage # Run tests with coverage
 ```
 
-## 📝 Contributing
+## 🌐 **Deployment**
+
+### **Vercel (Recommended)**
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
+
+### **Netlify**
+1. Connect your GitHub repository to Netlify
+2. Set build command: `npm run build`
+3. Set publish directory: `dist`
+4. Configure environment variables
+
+### **GitHub Pages**
+1. Run `npm run build`
+2. Push `dist` folder to `gh-pages` branch
+3. Enable GitHub Pages in repository settings
+
+## 🔧 **Development Guidelines**
+
+### **Code Style**
+- Use TypeScript strict mode
+- Follow ESLint and Prettier configurations
+- Use functional components with hooks
+- Implement proper error handling
+
+### **API Integration**
+- Use the generic API service for all backend operations
+- Implement proper loading and error states
+- Use React Query for caching and state management
+- Handle API errors gracefully
+
+### **Component Structure**
+- One component per file
+- Use PascalCase for component names
+- Implement proper prop validation
+- Use composition over inheritance
+
+## 🚨 **Troubleshooting**
+
+### **Common Issues**
+
+#### **API Connection Errors**
+- Verify `VITE_API_BASE_URL` is correct
+- Check if backend service is running
+- Verify CORS configuration on backend
+- Check network connectivity
+
+#### **Build Errors**
+- Ensure all dependencies are installed: `npm install`
+- Clear node_modules and reinstall: `rm -rf node_modules && npm install`
+- Check TypeScript configuration: `npm run type-check`
+
+#### **Runtime Errors**
+- Check browser console for error messages
+- Verify environment variables are loaded
+- Check API endpoint responses
+
+### **Debug Mode**
+Enable debug logging by setting:
+```env
+VITE_APP_ENVIRONMENT=development
+```
+
+## 🤝 **Contributing**
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes
+4. Run tests and linting: `npm run lint && npm run type-check`
+5. Commit your changes: `git commit -m 'Add feature'`
+6. Push to the branch: `git push origin feature-name`
+7. Submit a pull request
 
-## 📄 License
+## 📄 **License**
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🤝 Support
+## 🙏 **Acknowledgments**
 
-For support and questions:
-
-- Create an issue in the repository
-- Check the documentation
-- Review the code examples
-
-## 🎉 Acknowledgments
-
-- [shadcn/ui](https://ui.shadcn.com/) for the beautiful component library
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-- [Vite](https://vitejs.dev/) for the fast build tool
-- [React](https://reactjs.org/) for the amazing frontend framework
+- **shadcn/ui** for the excellent component library
+- **Tailwind CSS** for the utility-first CSS framework
+- **React Query** for powerful data fetching and caching
+- **Vite** for the fast build tool
 
 ---
 
-**Built with ❤️ for the hackathon community**
+**Next Milestone**: Phase 1 Iteration 2 - Advanced Features  
+**Target Deployment**: Vercel/Netlify Ready with Full API Integration

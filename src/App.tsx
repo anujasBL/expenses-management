@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Dashboard } from '@/components/pages/Dashboard';
+import { Expenses } from '@/components/pages/Expenses';
 import { EXPENSE_CATEGORIES } from '@/constants';
-import { storageService } from '@/services/storage';
+import { api } from '@/services/api';
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -10,10 +12,11 @@ function App() {
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        // Initialize categories if they don't exist
-        const existingCategories = await storageService.getCategories();
-        if (existingCategories.length === 0) {
-          await storageService.saveCategories(EXPENSE_CATEGORIES);
+        // Initialize categories via API if they don't exist
+        const existingCategories = await api.categories.getAll();
+        if (!existingCategories.data || existingCategories.data.length === 0) {
+          await api.categories.saveNew(EXPENSE_CATEGORIES[0]); // Save first category to initialize
+          // Note: In a real app, you might want to save all categories or handle this differently
         }
         
         setIsInitialized(true);
@@ -39,7 +42,12 @@ function App() {
 
   return (
     <Layout>
-      <Dashboard />
+      <Routes>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/expenses" element={<Expenses />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
     </Layout>
   );
 }

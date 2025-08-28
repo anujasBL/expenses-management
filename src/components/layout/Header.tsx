@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { APP_CONFIG } from '@/constants';
 import { Wallet, Menu, X } from 'lucide-react';
 
@@ -8,39 +9,55 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false }) => {
+  const location = useLocation();
+
+  const isActiveRoute = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and App Name */}
           <div className="flex items-center space-x-3">
-            <div className="flex-shrink-0">
-              <Wallet className="h-8 w-8 text-primary" />
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-xl font-semibold text-gray-900">
-                {APP_CONFIG.name}
-              </h1>
-              <p className="text-sm text-gray-500">
-                v{APP_CONFIG.version}
-              </p>
-            </div>
+            <Link to="/dashboard" className="flex items-center space-x-3">
+              <div className="flex-shrink-0">
+                <Wallet className="h-8 w-8 text-primary" />
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-semibold text-gray-900">
+                  {APP_CONFIG.name}
+                </h1>
+                <p className="text-sm text-gray-500">
+                  v{APP_CONFIG.version}
+                </p>
+              </div>
+            </Link>
           </div>
 
           {/* Navigation Links - Hidden on mobile */}
           <nav className="hidden md:flex space-x-8">
-            <a
-              href="#dashboard"
-              className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+            <Link
+              to="/dashboard"
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActiveRoute('/dashboard')
+                  ? 'text-primary bg-primary/10'
+                  : 'text-gray-700 hover:text-primary'
+              }`}
             >
               Dashboard
-            </a>
-            <a
-              href="#expenses"
-              className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+            </Link>
+            <Link
+              to="/expenses"
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActiveRoute('/expenses')
+                  ? 'text-primary bg-primary/10'
+                  : 'text-gray-700 hover:text-primary'
+              }`}
             >
               Expenses
-            </a>
+            </Link>
             <a
               href="#analytics"
               className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
@@ -86,18 +103,28 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-            <a
-              href="#dashboard"
-              className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            <Link
+              to="/dashboard"
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                isActiveRoute('/dashboard')
+                  ? 'text-primary bg-primary/10'
+                  : 'text-gray-700 hover:text-primary'
+              }`}
+              onClick={onMenuToggle}
             >
               Dashboard
-            </a>
-            <a
-              href="#expenses"
-              className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors"
+            </Link>
+            <Link
+              to="/expenses"
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                isActiveRoute('/expenses')
+                  ? 'text-primary bg-primary/10'
+                  : 'text-gray-700 hover:text-primary'
+              }`}
+              onClick={onMenuToggle}
             >
               Expenses
-            </a>
+            </Link>
             <a
               href="#analytics"
               className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors"

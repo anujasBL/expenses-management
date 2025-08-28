@@ -79,23 +79,12 @@ export interface ErrorResponse {
   details?: Record<string, unknown>;
 }
 
-// Generic entity types for API operations
 export interface BaseEntity {
   id: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface EntityCreateData<T> {
-  [K in keyof T]: T[K];
-}
-
-export interface EntityUpdateData<T> {
-  id: string;
-  [K in keyof T]?: T[K];
-}
-
-// API operation types
 export type ApiOperation = 'GET_ALL' | 'GET_BY_ID' | 'SAVE_NEW' | 'UPDATE' | 'DELETE';
 
 export interface ApiConfig {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   Home, 
   CreditCard, 
@@ -19,7 +20,7 @@ interface NavItem {
   id: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  href: string;
+  to: string;
   badge?: string;
 }
 
@@ -28,48 +29,106 @@ const navigationItems: NavItem[] = [
     id: 'dashboard',
     label: 'Dashboard',
     icon: Home,
-    href: '#dashboard',
+    to: '/dashboard',
   },
   {
     id: 'expenses',
     label: 'Expenses',
     icon: CreditCard,
-    href: '#expenses',
+    to: '/expenses',
     badge: 'New',
   },
   {
     id: 'analytics',
     label: 'Analytics',
     icon: BarChart3,
-    href: '#analytics',
+    to: '#analytics',
   },
   {
     id: 'trends',
     label: 'Trends',
     icon: TrendingUp,
-    href: '#trends',
+    to: '#trends',
   },
   {
     id: 'export',
     label: 'Export',
     icon: Download,
-    href: '#export',
+    to: '#export',
   },
   {
     id: 'import',
     label: 'Import',
     icon: Upload,
-    href: '#import',
+    to: '#import',
   },
   {
     id: 'settings',
     label: 'Settings',
     icon: Settings,
-    href: '#settings',
+    to: '#settings',
   },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => {
+  const location = useLocation();
+
+  const isActiveRoute = (path: string) => {
+    return location.pathname === path;
+  };
+
+  const renderNavItem = (item: NavItem) => {
+    const isActive = isActiveRoute(item.to);
+    const isExternal = item.to.startsWith('#');
+    
+    if (isExternal) {
+      return (
+        <a
+          key={item.id}
+          href={item.to}
+          className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+            isActive
+              ? 'text-primary bg-primary/10'
+              : 'text-gray-700 hover:text-primary hover:bg-gray-50'
+          }`}
+        >
+          <item.icon className={`mr-3 h-5 w-5 ${
+            isActive ? 'text-primary' : 'text-gray-400 group-hover:text-primary'
+          }`} />
+          <span className="flex-1">{item.label}</span>
+          {item.badge && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary text-primary-foreground">
+              {item.badge}
+            </span>
+          )}
+        </a>
+      );
+    }
+
+    return (
+      <Link
+        key={item.id}
+        to={item.to}
+        className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+          isActive
+            ? 'text-primary bg-primary/10'
+            : 'text-gray-700 hover:text-primary hover:bg-gray-50'
+        }`}
+        onClick={onClose}
+      >
+        <item.icon className={`mr-3 h-5 w-5 ${
+          isActive ? 'text-primary' : 'text-gray-400 group-hover:text-primary'
+        }`} />
+        <span className="flex-1">{item.label}</span>
+        {item.badge && (
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary text-primary-foreground">
+            {item.badge}
+          </span>
+        )}
+      </Link>
+    );
+  };
+
   return (
     <>
       {/* Mobile overlay */}
@@ -106,21 +165,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
 
           {/* Navigation items */}
           <nav className="flex-1 px-4 py-6 space-y-2">
-            {navigationItems.map((item) => (
-              <a
-                key={item.id}
-                href={item.href}
-                className="group flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-primary hover:bg-gray-50 transition-colors"
-              >
-                <item.icon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-primary" />
-                <span className="flex-1">{item.label}</span>
-                {item.badge && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary text-primary-foreground">
-                    {item.badge}
-                  </span>
-                )}
-              </a>
-            ))}
+            {navigationItems.map(renderNavItem)}
           </nav>
 
           {/* Quick actions */}
@@ -129,10 +174,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
               Quick Actions
             </h3>
             <div className="space-y-2">
-              <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+              <Link
+                to="/expenses"
+                className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
+                onClick={onClose}
+              >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Expense
-              </button>
+              </Link>
               <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
                 <Download className="mr-2 h-4 w-4" />
                 Export Data
