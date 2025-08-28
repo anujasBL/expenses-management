@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
@@ -9,9 +9,12 @@ import { Plus, DollarSign, FileText, Calendar } from 'lucide-react';
 import { EXPENSE_CATEGORIES } from '@/constants';
 import { ExpenseFormData } from '@/types';
 
-// Simple validation schema for testing
+// Validation schema - matches test expectations
 const expenseFormSchema = z.object({
-  amount: z.string().min(1, 'Amount is required'),
+  amount: z.string()
+    .min(1, 'Amount is required')
+    .refine((val) => !isNaN(parseFloat(val)), 'Amount must be a valid number')
+    .refine((val) => parseFloat(val) > 0, 'Amount must be greater than 0'),
   description: z.string().min(1, 'Description is required'),
   category: z.string().min(1, 'Category is required'),
   date: z.string().min(1, 'Date is required'),
@@ -35,6 +38,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
   isEditMode = false,
 }) => {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isValid },
@@ -84,6 +88,20 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
     label: category.name,
   }));
 
+  // Set initial values when component mounts or initialData changes
+  React.useEffect(() => {
+    if (initialData) {
+      setValue('amount', initialData.amount?.toString() || '');
+      setValue('description', initialData.description || '');
+      setValue('category', typeof initialData.category === 'string' 
+        ? initialData.category 
+        : (initialData.category as any)?.id || '');
+      setValue('date', initialData.date 
+        ? new Date(initialData.date).toISOString().split('T')[0]
+        : new Date().toISOString().split('T')[0]);
+    }
+  }, [initialData, setValue]);
+
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
@@ -110,14 +128,20 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <DollarSign className="h-4 w-4 text-gray-400" />
               </div>
-              <input
-                {...register('amount')}
-                id="amount"
-                type="number"
-                step="0.01"
-                min="0.01"
-                placeholder="0.00"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10"
+              <Controller
+                name="amount"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="amount"
+                    type="number"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="0.00"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10"
+                  />
+                )}
               />
             </div>
             {errors.amount && (
@@ -139,12 +163,18 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FileText className="h-4 w-4 text-gray-400" />
               </div>
-              <input
-                {...register('description')}
-                id="description"
-                type="text"
-                placeholder="What was this expense for?"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10"
+              <Controller
+                name="description"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="description"
+                    type="text"
+                    placeholder="What was this expense for?"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10"
+                  />
+                )}
               />
             </div>
             {errors.description && (
@@ -159,20 +189,20 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
 
           {/* Category Field */}
           <div>
-            <Select
-              options={categoryOptions}
-              value={watch('category')}
-              onChange={(value) => setValue('category', value)}
-              label="Category"
-              placeholder="Select a category"
-              error={errors.category?.message}
-              helperText="Choose the most appropriate category"
-            />
-            {/* Hidden input for React Hook Form */}
-            <input
-              {...register('category')}
-              type="hidden"
-              value={watch('category') || ''}
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  options={categoryOptions}
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="Category"
+                  placeholder="Select a category"
+                  error={errors.category?.message}
+                  helperText="Choose the most appropriate category"
+                />
+              )}
             />
           </div>
 
@@ -185,11 +215,17 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Calendar className="h-4 w-4 text-gray-400" />
               </div>
-              <input
-                {...register('date')}
-                id="date"
-                type="date"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10"
+              <Controller
+                name="date"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="date"
+                    type="date"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-10"
+                  />
+                )}
               />
             </div>
             {errors.date && (

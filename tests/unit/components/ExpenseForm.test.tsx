@@ -175,6 +175,9 @@ describe('ExpenseForm', () => {
       await user.type(amountInput, '25.50');
       await user.type(descriptionInput, 'Lunch');
       await user.selectOptions(categorySelect, 'food');
+      
+      // Set date value directly
+      await user.clear(dateInput);
       await user.type(dateInput, '2024-01-15');
 
       const submitButton = screen.getByRole('button', { name: /add expense/i });
@@ -212,10 +215,13 @@ describe('ExpenseForm', () => {
       const amountInput = screen.getByLabelText(/amount/i);
       const descriptionInput = screen.getByLabelText(/description/i);
       const categorySelect = screen.getByLabelText(/category/i);
+      const dateInput = screen.getByLabelText(/date/i);
 
       await user.type(amountInput, '25.50');
       await user.type(descriptionInput, 'Lunch');
       await user.selectOptions(categorySelect, 'food');
+      await user.clear(dateInput);
+      await user.type(dateInput, '2024-01-15');
 
       const submitButton = screen.getByRole('button', { name: /add expense/i });
       await user.click(submitButton);
@@ -228,6 +234,7 @@ describe('ExpenseForm', () => {
       expect(amountInput).toHaveValue('');
       expect(descriptionInput).toHaveValue('');
       expect(categorySelect).toHaveValue('');
+      expect(dateInput).toHaveValue('');
     });
   });
 

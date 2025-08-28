@@ -8,7 +8,7 @@ export const APP_CONFIG = {
   name: 'Expenses Management System',
   version: '0.1.0',
   environment: 'development',
-  apiBaseUrl: 'https://test-2-enc8.onrender.com',
+  apiBaseUrl: 'https://test-6-1-ou79.onrender.com',
   apiTimeout: 10000,
 } as const;
 

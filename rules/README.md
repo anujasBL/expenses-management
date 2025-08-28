@@ -46,6 +46,50 @@ This folder contains comprehensive prompt instructions for different aspects of 
 - Test coverage and production build verification
 - Git integration and reporting
 
+### **4. User Stories Prompt** (`user-stories-prompt.md`)
+**Purpose**: Generate comprehensive user stories for hackathon projects
+**Use When**:
+- Planning MVP development phases
+- Creating user story documents
+- Organizing team work distribution
+- Planning hackathon iterations
+
+**Key Requirements**:
+- 4-hour timebox constraint management
+- MVP-focused, testable deliverables
+- Team distribution across 3 developers + 1 tester
+- Parallelization opportunities identification
+
+### **5. Software Requirements Specification Prompt** (`software-requirements-specification-prompt.md`)
+**Purpose**: Generate IEEE 830-aligned SRS documents with MVP development plans
+**Use When**:
+- Creating formal software requirements documents
+- Planning technical implementation details
+- Preparing specifications for AI code generation
+- Defining comprehensive MVP development roadmaps
+
+**Key Requirements**:
+- IEEE 830 standards compliance
+- SMART requirements (Specific, Measurable, Achievable, Relevant, Testable)
+- Generic API integration specifications
+- Detailed MVP development iterations
+- Cursor AI code generation readiness
+
+### **6. Development Roadmap Prompt** (`development-roadmap-prompt.md`)
+**Purpose**: Generate comprehensive development roadmaps with hour-by-hour planning and team coordination
+**Use When**:
+- Planning hackathon projects with strict time constraints
+- Coordinating team development across multiple developers
+- Creating detailed implementation blueprints
+- Setting up bootstrap phases and parallel work streams
+
+**Key Requirements**:
+- 4-hour timebox planning with hour-by-hour breakdown
+- Bootstrap phase for Developer 1 with explicit responsibilities
+- Parallel work streams for multiple developers
+- Testing and deployment checkpoints per iteration
+- Cursor AI compatibility for coding prompts
+
 ## 🎯 **How to Use These Rules**
 
 ### **For Complete MVP Development**
@@ -83,14 +127,17 @@ This folder contains comprehensive prompt instructions for different aspects of 
 
 ## 📊 **Quality Assurance Matrix**
 
-| Aspect | MVP Coding | Testing Suite | Quality Gates |
-|--------|------------|---------------|---------------|
-| Code Quality | ✅ | ✅ | ✅ |
-| Testing Coverage | ⚠️ | ✅ | ✅ |
-| API Integration | ✅ | ⚠️ | ⚠️ |
-| Quality Enforcement | ⚠️ | ⚠️ | ✅ |
-| Documentation | ✅ | ✅ | ✅ |
-| CI/CD Setup | ✅ | ✅ | ✅ |
+| Aspect | MVP Coding | Testing Suite | Quality Gates | User Stories | SRS | Development Roadmap |
+|--------|------------|---------------|---------------|--------------|-----|-------------------|
+| Code Quality | ✅ | ✅ | ✅ | ⚠️ | ⚠️ | ⚠️ |
+| Testing Coverage | ⚠️ | ✅ | ✅ | ⚠️ | ⚠️ | ⚠️ |
+| API Integration | ✅ | ⚠️ | ⚠️ | ⚠️ | ✅ | ✅ |
+| Quality Enforcement | ⚠️ | ⚠️ | ✅ | ⚠️ | ⚠️ | ⚠️ |
+| Documentation | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| CI/CD Setup | ✅ | ✅ | ✅ | ⚠️ | ⚠️ | ✅ |
+| Project Planning | ⚠️ | ⚠️ | ⚠️ | ✅ | ✅ | ✅ |
+| Requirements Engineering | ⚠️ | ⚠️ | ⚠️ | ⚠️ | ✅ | ⚠️ |
+| Team Coordination | ⚠️ | ⚠️ | ⚠️ | ⚠️ | ⚠️ | ✅ |
 
 ## 🚀 **Best Practices**
 
@@ -118,6 +165,9 @@ This folder contains comprehensive prompt instructions for different aspects of 
 
 ### **Scenario 1: New MVP Development**
 ```bash
+# Use User Stories Prompt for planning
+# Use Development Roadmap Prompt for team coordination and timeline
+# Use SRS Prompt for detailed requirements and technical specifications
 # Use MVP Coding Prompt for core application
 # Then add Testing Suite Prompt for testing
 # Finally implement Quality Gate Prompt for enforcement
@@ -135,6 +185,22 @@ This folder contains comprehensive prompt instructions for different aspects of 
 # Use Quality Gate Prompt for existing codebase
 # Implement automated quality checks
 # Set up pre-push hooks and CI integration
+```
+
+### **Scenario 4: Requirements Engineering and Planning**
+```bash
+# Use User Stories Prompt for high-level planning
+# Use SRS Prompt for detailed technical specifications
+# Ensure IEEE 830 compliance and SMART requirements
+# Prepare for AI code generation
+```
+
+### **Scenario 5: Hackathon Team Coordination**
+```bash
+# Use Development Roadmap Prompt for team planning
+# Coordinate multiple developers with parallel work streams
+# Set up bootstrap phase and testing checkpoints
+# Ensure 4-hour timebox compliance
 ```
 
 ## 🔗 **Related Documentation**

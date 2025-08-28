@@ -67,10 +67,10 @@
 ### Production Environment Variables
 
 Create a `.env.production` file:
-
+https://test-6-bgwl.onrender.com
 ```env
 VITE_APP_ENVIRONMENT=production
-VITE_API_BASE_URL=https://test-2-enc8.onrender.com
+VITE_API_BASE_URL=https://test-6-bgwl.onrender.com
 VITE_ENABLE_ANALYTICS=true
 VITE_ENABLE_EXPORT_IMPORT=true
 VITE_ENABLE_CHARTS=true
