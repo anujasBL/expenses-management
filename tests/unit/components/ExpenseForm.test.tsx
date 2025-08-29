@@ -5,20 +5,35 @@ import { ExpenseForm } from '@/components/forms/ExpenseForm';
 import { mockCategories } from '../../fixtures/mock-data';
 import { render as customRender } from '../../utils/test-utils';
 
-// Mock the useExpenses hook
-jest.mock('@/hooks/useExpenses', () => ({
-  useExpenses: () => ({
-    addExpenseMutation: {
-      mutate: jest.fn(),
-      isPending: false,
-      error: null,
-    },
-    updateExpenseMutation: {
-      mutate: jest.fn(),
-      isPending: false,
-      error: null,
-    },
-  }),
+// Mock the CategorySelector component for easier testing
+jest.mock('@/components/ui/CategorySelector', () => ({
+  CategorySelector: ({ 
+    value, 
+    onChange, 
+    error, 
+    label = 'Category'
+  }: {
+    value?: string;
+    onChange: (value: string) => void;
+    error?: string;
+    label?: string;
+  }) => (
+    <div>
+      <label htmlFor="category-select">{label}</label>
+      <select 
+        id="category-select"
+        data-testid="category-selector"
+        value={value || ''} 
+        onChange={(e) => onChange(e.target.value)}
+      >
+        <option value="">Select category</option>
+        <option value="food">Food</option>
+        <option value="transportation">Transportation</option>
+        <option value="entertainment">Entertainment</option>
+      </select>
+      {error && <span role="alert">{error}</span>}
+    </div>
+  ),
 }));
 
 describe('ExpenseForm', () => {
