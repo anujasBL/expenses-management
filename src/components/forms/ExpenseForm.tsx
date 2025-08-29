@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
-import { Select } from '@/components/ui/Select';
+
 import {
   Card,
   CardContent,
@@ -12,8 +12,9 @@ import {
   CardTitle,
 } from '@/components/ui/Card';
 import { Plus, DollarSign, FileText, Calendar } from 'lucide-react';
-import { EXPENSE_CATEGORIES } from '@/constants';
+
 import { ExpenseFormData, ExpenseCategory } from '@/types';
+import { CategorySelector } from '@/components/ui/CategorySelector';
 
 // Validation schema - matches test expectations
 const expenseFormSchema = z.object({
@@ -111,11 +112,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
     }
   };
 
-  // Convert categories to select options
-  const categoryOptions = EXPENSE_CATEGORIES.map(category => ({
-    value: category.id,
-    label: category.name,
-  }));
+
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -214,14 +211,13 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
               control={control}
               render={({ field }) => {
                 return (
-                  <Select
-                    options={categoryOptions}
+                  <CategorySelector
                     value={field.value || ''}
                     onChange={field.onChange}
                     label="Category"
-                    placeholder="Select a category"
                     error={errors.category?.message}
-                    helperText="Choose the most appropriate category"
+                    required={true}
+                    disabled={isLoading}
                   />
                 );
               }}
