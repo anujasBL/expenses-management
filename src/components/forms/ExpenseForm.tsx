@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/Card';
 import { Plus, DollarSign, FileText, Calendar } from 'lucide-react';
 import { EXPENSE_CATEGORIES } from '@/constants';
-import { ExpenseFormData } from '@/types';
+import { ExpenseFormData, ExpenseCategory } from '@/types';
 
 // Validation schema - matches test expectations
 const expenseFormSchema = z.object({
@@ -45,7 +45,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
   isEditMode = false,
 }) => {
   // Extract category ID from initialData
-  const getCategoryId = (category: ExpenseCategory | string): string => {
+  const getCategoryId = (category: ExpenseCategory | string | undefined): string => {
     if (typeof category === 'string') return category;
     if (category && typeof category === 'object' && category.id)
       return category.id;
